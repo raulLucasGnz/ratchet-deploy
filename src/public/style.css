@@ -48,7 +48,7 @@ button:hover {
 
 #copy {
   position: absolute;
-  bottom: -1500px; /* Ajusta el valor según necesites */
+  bottom: -1800px; /* Ajusta el valor según necesites */
   left: 50%;
   transform: translateX(-50%);
 }
@@ -182,4 +182,25 @@ form {
 
 .merch-container:hover .hover-text {
   opacity: 1; /* Muestra el texto al hacer hover */
+}
+
+/*RESPONSIVE*/
+/* Estilos generales (para pantallas más grandes) */
+body {
+  font-size: 16px;
+}
+
+/* Estilos para pantallas de menos de 768px (móviles y tabletas) */
+@media screen and (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  #div-img-index {
+    display: block; /* Pone las imágenes una debajo de otra */
+  }
+
+  .product-container {
+    margin-bottom: 10px; /* Espacio entre los productos */
+  }
 }
