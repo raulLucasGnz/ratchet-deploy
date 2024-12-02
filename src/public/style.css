@@ -1,0 +1,185 @@
+#ti {
+  text-align: center;
+  font-size: 80px;
+  font-family: "Lexend Tera", sans-serif;
+}
+
+#subti {
+  text-align: center;
+  font-family: "Lexend Tera", sans-serif;
+  font-size: 30px;
+  margin-top: 70px;
+}
+
+#botones {
+  text-align: center; /* Centra el contenido dentro del contenedor */
+  display: flex; /* Hace del contenedor un contenedor flex */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  height: 50vh; /* Ocupa toda la altura de la viewport */
+  gap: 60px;
+}
+
+button {
+  border: none;
+  background-color: black;
+  color: white;
+  transition: background-color 1s ease-in-out;
+  transition: color 0.5s ease-in-out;
+}
+
+button:hover {
+  background-color: white;
+  color: black;
+  cursor: pointer;
+}
+
+#bt-pre {
+  width: 300px; /* Ancho del botón */
+  height: 50px; /* Alto del botón */
+  font-family: "Lexend Tera", sans-serif;
+}
+
+#bt-me {
+  width: 300px; /* Ancho del botón */
+  height: 50px; /* Alto del botón */
+  font-family: "Lexend Tera", sans-serif;
+}
+
+#copy {
+  position: absolute;
+  bottom: -1500px; /* Ajusta el valor según necesites */
+  left: 50%;
+  transform: translateX(-50%);
+}
+#copyMerch {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+#krPre {
+  text-align: left;
+  font-family: "Lexend Tera", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 200px;
+}
+
+#textoPre {
+  text-align: left;
+  font-family: "Lexend Tera", sans-serif;
+  display: flex;
+  justify-content: center;
+  margin-top: 100px;
+}
+
+#comprar {
+  width: 200px; /* Ancho del botón */
+  height: 30px; /* Alto del botón */
+  font-family: "Lexend Tera", sans-serif;
+  text-align: center; /* Centra el contenido dentro del contenedor */
+  display: flex; /* Hace del contenedor un contenedor flex */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  height: 4vh; /* Ocupa toda la altura de la viewport */
+}
+
+form {
+  text-align: center; /* Centra el contenido dentro del contenedor */
+  display: flex; /* Hace del contenedor un contenedor flex */
+  justify-content: center; /* Centra los elementos horizontalmente */
+  align-items: center; /* Centra los elementos verticalmente */
+  height: 50vh; /* Ocupa toda la altura de la viewport */
+  gap: 60px;
+}
+
+#linkHome {
+  text-decoration: none;
+  color: inherit;
+}
+
+.product-container a {
+  display: block; /* Hace que el enlace ocupe todo el contenedor */
+  text-decoration: none; /* Elimina el subrayado del enlace */
+  color: inherit; /* Hereda el color del texto */
+}
+
+.product-container {
+  text-align: center; /* Centra el contenido dentro del contenedor */
+  margin: 20px auto; /* Centra el contenedor horizontalmente */
+  width: 20vw; /* Ajusta el ancho del contenedor */
+  position: relative; /* Para posicionar el texto hover correctamente */
+}
+
+.product-container img {
+  width: 100%; /* La imagen ocupa todo el contenedor */
+  height: auto;
+  object-fit: cover;
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.product-container .hover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 27px;
+  font-family: "Lexend Tera", sans-serif;
+  opacity: 0;
+  pointer-events: none; /* Evita interferencias en el hover */
+  transition: opacity 0.3s ease;
+}
+
+.product-container:hover img {
+  transform: scale(1.1); /* Zoom al hacer hover */
+  filter: brightness(0.9) blur(3px); /* Desenfoque y ajuste de brillo */
+  opacity: 0.85;
+  cursor: pointer; /* Cambia el cursor a puntero */
+}
+
+.product-container:hover .hover-text {
+  opacity: 1; /* Muestra el texto al hacer hover */
+}
+
+/* Estilos para los productos de "merch" */
+.merch-container {
+  text-align: center;
+  margin: 30px auto;
+  width: 25vw; /* Ajusta el tamaño de las imágenes de merch */
+  position: relative;
+}
+
+.merch-container img {
+  width: 100%; /* Asegura que la imagen ocupe todo el contenedor */
+  height: auto;
+  object-fit: contain; /* Evita recortes */
+  border-radius: 10px;
+  transition: transform 0.3s ease, filter 0.3s ease, opacity 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.merch-container .hover-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 22px;
+  font-family: "Lexend Tera", sans-serif;
+  opacity: 0;
+  pointer-events: none; /* Evita interferencias en el hover */
+  transition: opacity 0.3s ease;
+}
+
+.merch-container:hover img {
+  transform: scale(1.05); /* Zoom suave al hacer hover */
+  filter: brightness(0.85); /* Ajusta el brillo */
+  cursor: pointer; /* Cambia el cursor a puntero */
+}
+
+.merch-container:hover .hover-text {
+  opacity: 1; /* Muestra el texto al hacer hover */
+}
