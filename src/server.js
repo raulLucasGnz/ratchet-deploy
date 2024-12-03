@@ -126,7 +126,16 @@ app.post("/api/validate-email", async (req, res) => {
   }
 });
 
-// Middleware para Stripe Webhooks
+// Middleware para registrar el cuerpo de la solicitud antes de procesar
+app.use((req, res, next) => {
+  console.log('### Log de la Solicitud Original');
+  console.log('Método:', req.method);
+  console.log('Tipo de Contenido:', req.headers['content-type']);
+  console.log('Cuerpo Original:', req.body);
+  next();  // Llama al siguiente middleware
+});
+
+
 // Middleware para Stripe Webhooks
 app.post(
   "/webhook-stripe",
@@ -141,6 +150,9 @@ app.post(
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
 
       if (event.type === "checkout.session.completed") {
+        console.log('### Log después del Middleware express.raw()');
+        console.log('Tipo de req.body:', Buffer.isBuffer(req.body) ? 'Buffer' : typeof req.body);
+        console.log('Cuerpo Raw:', req.body.toString());
         const session = event.data.object;
 
         // Obtener el correo verificado desde la sesión
@@ -199,6 +211,7 @@ app.post(
     }
   }
 );
+
 
 // Rutas principales
 app.use("/", require("./routes/index"));
