@@ -1,13 +1,13 @@
 #ti {
   text-align: center;
-  font-size: 80px;
+  font-size: 6em;
   font-family: "Lexend Tera", sans-serif;
 }
 
 #subti {
   text-align: center;
   font-family: "Lexend Tera", sans-serif;
-  font-size: 30px;
+  font-size: 2em;
   margin-top: 70px;
 }
 
@@ -47,10 +47,11 @@ button:hover {
 }
 
 #copy {
-  position: absolute;
-  bottom: -1800px; /* Ajusta el valor según necesites */
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative; /* Permite que el elemento fluya con el contenido */
+  text-align: center; /* Centra el texto */
+  margin-top: 20px; /* Espacio entre el contenido y el texto */
+  font-size: 0.9em; /* Ajusta el tamaño de fuente para móviles */
+  padding: 10px; /* Espacio alrededor del texto */
 }
 #copyMerch {
   position: absolute;
@@ -185,22 +186,89 @@ form {
 }
 
 /*RESPONSIVE*/
-/* Estilos generales (para pantallas más grandes) */
-body {
-  font-size: 16px;
-}
-
-/* Estilos para pantallas de menos de 768px (móviles y tabletas) */
-@media screen and (max-width: 768px) {
-  body {
-    font-size: 14px;
+/* Para pantallas de menos de 1024px (tabletas) */
+@media screen and (max-width: 1024px) {
+  #ti {
+    font-size: 4em;
   }
 
-  #div-img-index {
-    display: block; /* Pone las imágenes una debajo de otra */
+  #subti {
+    font-size: 1.8em;
+    margin-top: 50px;
+  }
+
+  #botones {
+    gap: 40px;
+  }
+
+  #bt-pre,
+  #bt-me {
+    width: 250px;
   }
 
   .product-container {
-    margin-bottom: 10px; /* Espacio entre los productos */
+    width: 30vw;
+  }
+
+  .merch-container {
+    width: 35vw;
+  }
+}
+
+/* Para pantallas de menos de 768px (móviles) */
+@media screen and (max-width: 768px) {
+  #ti {
+    font-size: 3em;
+  }
+
+  #subti {
+    font-size: 1.5em;
+    margin-top: 30px;
+  }
+
+  #botones {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  #bt-pre,
+  #bt-me {
+    width: 200px;
+  }
+
+  #div-img-index {
+    display: block;
+  }
+
+  .product-container {
+    width: 80%;
+  }
+
+  .merch-container {
+    width: 90%;
+  }
+
+  .product-container img,
+  .merch-container img {
+    border-radius: 5px;
+  }
+}
+
+/* Para pantallas de menos de 480px (teléfonos pequeños) */
+@media screen and (max-width: 480px) {
+  #ti {
+    font-size: 2em;
+  }
+
+  #subti {
+    font-size: 1.2em;
+  }
+
+  button {
+    font-size: 0.9em;
+  }
+
+  .hover-text {
+    font-size: 20px;
   }
 }
