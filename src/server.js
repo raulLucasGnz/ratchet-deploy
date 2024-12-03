@@ -1,8 +1,8 @@
 const express = require("express");
 const { create } = require("express-handlebars");
 const path = require("path");
-require("dotenv").config(); // Cargar variables de entorno
-const stripe = require("stripe")("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");
+require('dotenv').config(); // Cargar variables de entorno
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const app = express();
 
@@ -60,7 +60,7 @@ app.post(
   express.raw({ type: "application/json" }),
   async (req, res) => {
     const sig = req.headers["stripe-signature"];
-    const endpointSecret = "whsec_1c8d485b48e15d3c04b1ecc3647ed7a310fd125e632efd67ef45294fa97d314c";
+    const endpointSecret = process.env.WEBHOOK_SECRET_KEY;
 
     try {
       const event = stripe.webhooks.constructEvent(
@@ -83,8 +83,8 @@ app.post(
 
         // Enviar enlace al correo del cliente usando Mailjet
         const mailjet = require("node-mailjet").apiConnect(
-          "d222394e196840b86bf3041a036052bb",
-          "55a0f2a79d44b9f3e6dfdf5272e0c831"
+          process.env.MAILJET_API_KEY,
+          process.env.MAILJET_API_SECRET     
         );
 
         const request = mailjet.post("send", { version: "v3.1" }).request({
