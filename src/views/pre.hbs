@@ -3,60 +3,26 @@
   Escucha el disco antes de su lanzamiento a plataformas digitales.
 </p>
 
-<!-- Formulario de verificación de correo -->
-<form id="emailForm">
-  <label for="email">Introduce tu correo electrónico:</label>
-  <input
-    type="email"
-    id="email"
-    name="email"
-    required
-    placeholder="ejemplo@correo.com"
-  />
-  <button type="submit">Validar correo</button>
-</form>
-
-<!-- Botones de compra (inicialmente oculto) -->
-<div id="botones" style="display: none;">
-  <!-- Formulario de pago (inicialmente oculto) -->
-  <form
-    action="https://buy.stripe.com/8wMdUh5hJbyR3GE6oo"
-    method="GET"
-    id="paymentForm"
-  >
-    <button type="submit" id="comprar">Comprar</button>
-  </form>
-</div>
+<!-- Botón de compra -->
+<button id="comprar">Comprar</button>
 
 <p id="copy">ratchet ©2025</p>
 
 <script>
-  document.getElementById('emailForm').addEventListener('submit', async function (event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    
+  document.getElementById('comprar').addEventListener('click', async function () {
     try {
-      const response = await fetch('/api/validate-email', {
+      const response = await fetch('/create-checkout-session', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
       });
 
-      const result = await response.json();
-      console.log('Respuesta recibida:', result); // Debugging
-
-      if (result.valid) {
-        console.log('Correo válido. Mostrando opciones de compra.');
-        document.getElementById('emailForm').style.display = 'none';
-        document.getElementById('textoPre').style.display = 'block';
-        document.getElementById('botones').style.display = 'block'; // Ahora mostramos los botones
-      } else {
-        console.warn('Correo no válido:', result.error);
-        alert(result.error || 'Correo no válido. Por favor, inténtalo de nuevo.');
-      }
+      const { url } = await response.json();
+      window.location.href = url; // Redirigir al cliente a Stripe Checkout
     } catch (error) {
-      console.error('Error al validar el correo:', error);
-      alert('Hubo un problema al validar el correo. Por favor, inténtalo más tarde.');
+      console.error('Error iniciando Stripe Checkout:', error);
+      alert('Hubo un problema al iniciar el proceso de compra. Por favor, inténtalo más tarde.');
     }
   });
 </script>
