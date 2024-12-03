@@ -6,6 +6,10 @@
     "start": "node src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+"engines": {
+  "node": "18.x"
+}
+
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -20,8 +24,5 @@
     "nodemailer": "^6.9.16",
     "resend": "^4.0.1",
     "stripe": "^13.4.0"
-  },
-  "devDependencies": {
-    "morgan": "^1.10.0"
   }
 }
