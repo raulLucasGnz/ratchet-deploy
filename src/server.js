@@ -2,6 +2,30 @@ const express = require("express");
 const { create } = require("express-handlebars");
 const path = require("path");
 require("dotenv").config(); // Cargar variables de entorno
+const axios = require("axios");
+const morgan = require("morgan");
+const session = require('express-session');
+
+
+// Inicialización
+const app = express();
+
+// Middleware para procesar solicitudes POST y JSON
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json()); // Este middleware es necesario para parsear JSON en las solicitudes.
+
+// Configurar el middleware de sesión
+app.use(
+  session({
+    secret: 'mi_secreto', // Cambia esto por un valor seguro
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }, // Cambia a true si usas HTTPS
+  })
+);
+
+// Usa Morgan para loggear las solicitudes HTTP
+app.use(morgan("dev"));
 
 // Stripe
 const stripe = require("stripe")(
@@ -11,11 +35,9 @@ const stripe = require("stripe")(
   }
 );
 
-// Inicialización
-const app = express();
+//Hunter Mail API KEY
+const HUNTER_API_KEY = "29dae7feadf6f08c72645a994c125d074673b61a";
 
-// Middleware para procesar solicitudes POST y JSON
-app.use(express.urlencoded({ extended: false }));
 
 // Configuración de vistas
 app.set("views", path.join(__dirname, "views"));
@@ -31,40 +53,111 @@ app.set("view engine", ".hbs");
 // Archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
 
+// Verificación del correo
+async function validateEmailWithHunter(email) {
+  try {
+    const response = await axios.get(
+      `https://api.hunter.io/v2/email-verifier`,
+      {
+        params: {
+          email: email,
+          api_key: HUNTER_API_KEY,
+        },
+      }
+    );
+
+    console.log("Respuesta de Hunter:", response.data); // Imprime toda la respuesta
+
+    // Verifica si la respuesta tiene la estructura esperada
+    if (response.data && response.data.data) {
+      const { status, result } = response.data.data;
+
+      // Verifica el estado de la respuesta
+      if (status === "valid") {
+        return { valid: true, result: "deliverable" };
+      } else if (status === "invalid" || result === "undeliverable") {
+        return { valid: false, result: "undeliverable" };
+      } else if (status === "accept_all") {
+        return { valid: true, result: "accept_all" };
+      } else if (status === "disposable") {
+        return { valid: false, result: "disposable" };
+      } else {
+        return { valid: false, result: "unknown" };
+      }
+    } else {
+      return { valid: false, error: "Respuesta no válida de la API" };
+    }
+  } catch (err) {
+    console.error("Error al contactar con la API de Hunter:", err);
+    return {
+      valid: false,
+      error: "Error al contactar con el servicio de verificación",
+    };
+  }
+}
+
+app.post("/api/validate-email", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({
+      valid: false,
+      error: "Correo no proporcionado",
+    });
+  }
+
+  try {
+    const validationResponse = await validateEmailWithHunter(email);
+
+    // Si el correo es válido, guardarlo en la sesión
+    if (validationResponse.valid) {
+      req.session.email = email;  // Almacena el correo en la sesión
+    }
+
+    return res.status(200).json({
+      valid: validationResponse.valid,
+      result: validationResponse.result || "unknown",
+      error: validationResponse.error || null,
+    });
+  } catch (err) {
+    console.error("Error al validar el correo:", err);
+    return res.status(500).json({
+      valid: false,
+      error: "Error al contactar con el servicio de verificación",
+    });
+  }
+});
+
+
 // Middleware para Stripe Webhooks
 app.post(
   "/webhook-stripe",
-  express.raw({ type: "application/json" }), // Usar raw body
+  express.raw({ type: "application/json" }),
   async (req, res) => {
     const endpointSecret = process.env.WEBHOOK_SECRET_KEY;
     const sig = req.headers["stripe-signature"];
 
     let event;
     try {
-      // Verificar el webhook
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
 
-      // Procesar el evento
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
 
-        // Asegurarse de que el correo electrónico del cliente esté presente
-        if (!session.customer_email) {
-          console.error(
-            "Error: No se encontró el correo electrónico del cliente."
-          );
+        // Obtener el correo verificado desde la sesión
+        const verifiedEmail = req.session.email;
+        const email = verifiedEmail || session.customer_email || session.customer_details.email;
+
+        // Si no se encuentra un correo, redirigir para solicitarlo
+        if (!email) {
+          console.error("Error: No se encontró el correo electrónico.");
           return res
             .status(303)
-            .set("Location", `/request-email?sessionId=${session.id}`) // Pasar el session ID como parámetro
+            .set("Location", `/request-email?sessionId=${session.id}`)
             .send("Redirigiendo para solicitar correo electrónico.");
         }
 
-        //DEBUG
-        console.log("API Key:", process.env.MAILJET_API_KEY);
-        console.log("API Secret:", process.env.MAILJET_API_SECRET);
-        console.log("Sender Email:", process.env.MAILJET_SENDER_EMAIL);
-
-        // Configuración de Mailjet
+        // Enviar correo al cliente con el enlace al disco
         const mailjet = require("node-mailjet").apiConnect(
           process.env.MAILJET_API_KEY,
           process.env.MAILJET_API_SECRET
@@ -79,7 +172,7 @@ app.post(
               },
               To: [
                 {
-                  Email: session.customer_email, // Correo del cliente desde Stripe
+                  Email: email,
                   Name: "Cliente",
                 },
               ],
@@ -92,7 +185,6 @@ app.post(
           ],
         });
 
-        // Enviar correo
         try {
           const response = await request;
           console.log("Correo enviado correctamente:", response.body);
@@ -101,7 +193,6 @@ app.post(
         }
       }
 
-      // Responder al webhook
       res.status(200).send("Evento recibido");
     } catch (err) {
       console.error(`⚠️  Error verificando el webhook: ${err.message}`);
@@ -109,29 +200,6 @@ app.post(
     }
   }
 );
-
-//Ruta para procesar el correo
-app.post("/submit-email", async (req, res) => {
-  const { sessionId, email } = req.body;
-
-  if (!sessionId || !email) {
-    return res.status(400).send("Falta el ID de la sesión o el correo.");
-  }
-
-  try {
-    // Actualizar la sesión de Stripe con el correo
-    const session = await stripe.checkout.sessions.update(sessionId, {
-      customer_email: email,
-    });
-
-    // Aquí puedes continuar con el envío del correo
-    console.log(`Correo actualizado para la sesión ${sessionId}: ${email}`);
-    res.status(200).send("Correo registrado correctamente. ¡Gracias!");
-  } catch (error) {
-    console.error("Error actualizando la sesión de Stripe:", error);
-    res.status(500).send("Ocurrió un error al registrar el correo.");
-  }
-});
 
 // Rutas principales
 app.use("/", require("./routes/index"));

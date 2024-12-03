@@ -67,11 +67,12 @@ button:hover {
 }
 
 #textoPre {
-  text-align: left;
+  text-align: center; /* Centra el texto horizontalmente */
   font-family: "Lexend Tera", sans-serif;
-  display: flex;
-  justify-content: center;
   margin-top: 100px;
+  width: 80%; /* Puedes ajustar el ancho según lo necesites */
+  margin-left: auto;
+  margin-right: auto; /* Centra el contenedor */
 }
 
 #comprar {
@@ -183,6 +184,47 @@ form {
 
 .merch-container:hover .hover-text {
   opacity: 1; /* Muestra el texto al hacer hover */
+}
+
+/* Estilo general del formulario */
+#emailForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 20px;
+  border-radius: 15px;
+}
+#emailForm label {
+  font-family: "Lexend Tera", sans-serif;
+}
+
+/* Estilo del campo de entrada (input) */
+#emailForm input[type="email"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  color: #333;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+}
+
+/* Estilo para cuando el input recibe focus */
+#emailForm input[type="email"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+#emailForm button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Lexend Tera", sans-serif;
 }
 
 /*RESPONSIVE*/

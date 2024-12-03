@@ -12,16 +12,6 @@ router.get("/pre", (req, res) => {
   res.render("pre"); // Renderiza la vista 'pre.hbs'
 });
 
-//Pedir Email en caso de no darlo el cliente
-router.get("/request-email", (req, res) => {
-  const { sessionId } = req.query; // Obtener el sessionId de los parámetros
-  if (!sessionId) {
-    return res.status(400).send("Falta el ID de la sesión.");
-  }
-  // Renderizar una página que muestre el formulario para introducir el correo
-  res.render("requestEmail", { sessionId });
-});
-
 //Ruta de prueba
 router.get("/test", (req, res) => {
   res.status(200).send("Ruta de prueba funcionando.");
