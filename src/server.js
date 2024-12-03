@@ -54,8 +54,9 @@ app.post(
             "Error: No se encontró el correo electrónico del cliente."
           );
           return res
-            .status(400)
-            .send("Error: No se encontró el correo electrónico del cliente.");
+            .status(303)
+            .set("Location", `/request-email?sessionId=${session.id}`) // Pasar el session ID como parámetro
+            .send("Redirigiendo para solicitar correo electrónico.");
         }
 
         //DEBUG
@@ -108,6 +109,29 @@ app.post(
     }
   }
 );
+
+//Ruta para procesar el correo
+app.post("/submit-email", async (req, res) => {
+  const { sessionId, email } = req.body;
+
+  if (!sessionId || !email) {
+    return res.status(400).send("Falta el ID de la sesión o el correo.");
+  }
+
+  try {
+    // Actualizar la sesión de Stripe con el correo
+    const session = await stripe.checkout.sessions.update(sessionId, {
+      customer_email: email,
+    });
+
+    // Aquí puedes continuar con el envío del correo
+    console.log(`Correo actualizado para la sesión ${sessionId}: ${email}`);
+    res.status(200).send("Correo registrado correctamente. ¡Gracias!");
+  } catch (error) {
+    console.error("Error actualizando la sesión de Stripe:", error);
+    res.status(500).send("Ocurrió un error al registrar el correo.");
+  }
+});
 
 // Rutas principales
 app.use("/", require("./routes/index"));
