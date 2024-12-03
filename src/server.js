@@ -1,8 +1,13 @@
+const path = require("path");
+require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const express = require("express");
 const { create } = require("express-handlebars");
-const path = require("path");
-require('dotenv').config(); // Cargar variables de entorno
-const stripe = require("stripe")("whsec_1c8d485b48e15d3c04b1ecc3647ed7a310fd125e632efd67ef45294fa97d314c");
+
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+
+
+
+console.log(process.env.STRIPE_SECRET_KEY)
 
 const app = express();
 
@@ -11,7 +16,7 @@ app.set("views", path.join(__dirname, "views"));
 const hbs = create({
   defaultLayout: "main",
   layoutsDir: path.join(app.get("views"), "layouts"),
-  partialsDir: path.join(app.get("vixews"), "partials"),
+  partialsDir: path.join(app.get("views"), "partials"),
   extname: ".hbs",
 });
 app.engine(".hbs", hbs.engine);
