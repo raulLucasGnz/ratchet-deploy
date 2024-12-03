@@ -180,7 +180,7 @@ p{
   }
 
   #img-pre {
-    width: 70%;  /* Ajusta el ancho */
+    width: 100%;  /* Ajusta el ancho */
     height: auto;  /* Mantiene las proporciones */
     display: block;   /* Hace que la imagen se comporte como un bloque */
     margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
@@ -239,10 +239,10 @@ p{
   }
 
   #img-pre {
-    width: 70%;  /* Ajusta el ancho */
+    width: 100%;  /* Ajusta el ancho */
     height: auto;  /* Mantiene las proporciones */
     display: block;   /* Hace que la imagen se comporte como un bloque */
     margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
   }
-  
+
 }
