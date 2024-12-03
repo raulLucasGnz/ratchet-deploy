@@ -127,15 +127,17 @@ app.post("/api/validate-email", async (req, res) => {
 });
 
 // Middleware para Stripe Webhooks
+// Middleware para Stripe Webhooks
 app.post(
   "/webhook-stripe",
-  express.raw({ type: "application/json" }), // Asegurarse de que se pase el cuerpo como un Buffer sin procesar
+  express.raw({ type: "application/json" }), // Asegúrate de que el cuerpo sea crudo (raw)
   async (req, res) => {
     const endpointSecret = process.env.WEBHOOK_SECRET_KEY;
     const sig = req.headers["stripe-signature"];
 
     let event;
     try {
+      // El cuerpo de la solicitud debe ser un Buffer crudo, así que pasamos req.body directamente
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
 
       if (event.type === "checkout.session.completed") {
