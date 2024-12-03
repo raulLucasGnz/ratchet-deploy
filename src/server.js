@@ -6,7 +6,6 @@ const axios = require("axios");
 const morgan = require("morgan");
 const session = require('express-session');
 
-
 // Inicialización
 const app = express();
 
@@ -35,9 +34,8 @@ const stripe = require("stripe")(
   }
 );
 
-//Hunter Mail API KEY
+// Hunter Mail API KEY
 const HUNTER_API_KEY = "29dae7feadf6f08c72645a994c125d074673b61a";
-
 
 // Configuración de vistas
 app.set("views", path.join(__dirname, "views"));
@@ -128,11 +126,10 @@ app.post("/api/validate-email", async (req, res) => {
   }
 });
 
-
 // Middleware para Stripe Webhooks
 app.post(
   "/webhook-stripe",
-  express.raw({ type: "application/json" }),
+  express.raw({ type: "application/json" }), // Asegurarse de que se pase el cuerpo como un Buffer sin procesar
   async (req, res) => {
     const endpointSecret = process.env.WEBHOOK_SECRET_KEY;
     const sig = req.headers["stripe-signature"];
