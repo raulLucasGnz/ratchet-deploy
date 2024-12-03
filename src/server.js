@@ -48,6 +48,16 @@ app.post(
       if (event.type === "checkout.session.completed") {
         const session = event.data.object;
 
+        // Asegurarse de que el correo electrónico del cliente esté presente
+        if (!session.customer_email) {
+          console.error(
+            "Error: No se encontró el correo electrónico del cliente."
+          );
+          return res
+            .status(400)
+            .send("Error: No se encontró el correo electrónico del cliente.");
+        }
+
         //DEBUG
         console.log("API Key:", process.env.MAILJET_API_KEY);
         console.log("API Secret:", process.env.MAILJET_API_SECRET);
