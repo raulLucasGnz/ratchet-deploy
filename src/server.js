@@ -2,13 +2,7 @@ const path = require("path");
 require("dotenv").config({ path: path.resolve(__dirname, "../.env") });
 const express = require("express");
 const { create } = require("express-handlebars");
-
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-
-
-
-console.log(process.env.STRIPE_SECRET_KEY)
-
 const app = express();
 
 // Configuración de vistas
@@ -24,10 +18,6 @@ app.set("view engine", ".hbs");
 
 // Archivos estáticos
 app.use(express.static(path.join(__dirname, "public")));
-
-// Middleware para manejar solicitudes POST
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: false }));
 
 // Ruta para crear una sesión de Stripe Checkout
 app.post("/create-checkout-session", async (req, res) => {

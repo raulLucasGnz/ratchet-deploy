@@ -1,98 +1,63 @@
 #ti {
   text-align: center;
   font-size: 6em;
-  font-family: "Lexend Tera", sans-serif;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
 }
 
-#subti {
-  text-align: center;
-  font-family: "Lexend Tera", sans-serif;
-  font-size: 2em;
-  margin-top: 70px;
+p{
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  text-align: center; /* Asegura que el texto esté centrado */
 }
 
-#botones {
-  text-align: center; /* Centra el contenido dentro del contenedor */
+/* Ajustes específicos para el botón de compra */
+#comprar {
+  width: 200px; /* Ancho del botón */
+  height: 30px; /* Alto del botón */
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  text-align: center; /* Asegura que el texto esté centrado */
   display: flex; /* Hace del contenedor un contenedor flex */
-  justify-content: center; /* Centra los elementos horizontalmente */
-  align-items: center; /* Centra los elementos verticalmente */
-  height: 50vh; /* Ocupa toda la altura de la viewport */
-  gap: 60px;
+  justify-content: center; /* Centra el contenido horizontalmente */
+  align-items: center; /* Centra el contenido verticalmente */
+  margin: 0 auto; /* Centra el botón dentro de su contenedor */
+  background-color: black; /* Fondo oscuro para el botón */
+  color: white; /* Texto blanco para el botón */
+  border: none; /* Elimina el borde */
+  cursor: pointer; /* Cambia el cursor al pasar por encima */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transición suave para hover */
 }
 
-button {
-  border: none;
-  background-color: black;
-  color: white;
-  transition: background-color 1s ease-in-out;
-  transition: color 0.5s ease-in-out;
-}
-
-button:hover {
-  background-color: white;
-  color: black;
-  cursor: pointer;
-}
-
-#bt-pre {
-  width: 300px; /* Ancho del botón */
-  height: 50px; /* Alto del botón */
-  font-family: "Lexend Tera", sans-serif;
-}
-
-#bt-me {
-  width: 300px; /* Ancho del botón */
-  height: 50px; /* Alto del botón */
-  font-family: "Lexend Tera", sans-serif;
+#comprar:hover {
+  background-color: white; /* Cambia el color de fondo cuando se pasa el cursor */
+  color: black; /* Cambia el color del texto cuando se pasa el cursor */
 }
 
 #copy {
   position: relative; /* Permite que el elemento fluya con el contenido */
   text-align: center; /* Centra el texto */
-  margin-top: 20px; /* Espacio entre el contenido y el texto */
   font-size: 0.9em; /* Ajusta el tamaño de fuente para móviles */
   padding: 10px; /* Espacio alrededor del texto */
 }
-#copyMerch {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
+
 #krPre {
   text-align: left;
-  font-family: "Lexend Tera", sans-serif;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
   display: flex;
   justify-content: center;
-  margin-top: 200px;
+  margin-top: 80px;
 }
 
 #textoPre {
   text-align: center; /* Centra el texto horizontalmente */
-  font-family: "Lexend Tera", sans-serif;
-  margin-top: 100px;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
+  margin-top: 50px;
   width: 80%; /* Puedes ajustar el ancho según lo necesites */
   margin-left: auto;
   margin-right: auto; /* Centra el contenedor */
-}
-
-#comprar {
-  width: 200px; /* Ancho del botón */
-  height: 30px; /* Alto del botón */
-  font-family: "Lexend Tera", sans-serif;
-  text-align: center; /* Centra el contenido dentro del contenedor */
-  display: flex; /* Hace del contenedor un contenedor flex */
-  justify-content: center; /* Centra los elementos horizontalmente */
-  align-items: center; /* Centra los elementos verticalmente */
-  height: 4vh; /* Ocupa toda la altura de la viewport */
-}
-
-form {
-  text-align: center; /* Centra el contenido dentro del contenedor */
-  display: flex; /* Hace del contenedor un contenedor flex */
-  justify-content: center; /* Centra los elementos horizontalmente */
-  align-items: center; /* Centra los elementos verticalmente */
-  height: 50vh; /* Ocupa toda la altura de la viewport */
-  gap: 60px;
 }
 
 #linkHome {
@@ -122,36 +87,20 @@ form {
     box-shadow 0.3s ease;
 }
 
-.product-container .hover-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 27px;
-  font-family: "Lexend Tera", sans-serif;
-  opacity: 0;
-  pointer-events: none; /* Evita interferencias en el hover */
-  transition: opacity 0.3s ease;
-}
-
-.product-container:hover img {
-  transform: scale(1.1); /* Zoom al hacer hover */
-  filter: brightness(0.9) blur(3px); /* Desenfoque y ajuste de brillo */
-  opacity: 0.85;
-  cursor: pointer; /* Cambia el cursor a puntero */
-}
-
-.product-container:hover .hover-text {
-  opacity: 1; /* Muestra el texto al hacer hover */
-}
-
 /* Estilos para los productos de "merch" */
 .merch-container {
   text-align: center;
-  margin: 30px auto;
-  width: 25vw; /* Ajusta el tamaño de las imágenes de merch */
+  margin: 80px auto;
+  width: 20vw; /* Ajusta el tamaño de las imágenes de merch */
   position: relative;
+}
+
+.merch-container-large {
+  width: 30vw; /* Ajusta el tamaño de los productos 1, 2, 3 y 4 a un 30% del ancho de la pantalla */
+}
+
+.merch-container-medio{
+  width: 25vw;
 }
 
 .merch-container img {
@@ -170,7 +119,8 @@ form {
   transform: translate(-50%, -50%);
   color: white;
   font-size: 22px;
-  font-family: "Lexend Tera", sans-serif;
+  font-family: 'Helvetica', sans-serif;
+  font-weight: bold;
   opacity: 0;
   pointer-events: none; /* Evita interferencias en el hover */
   transition: opacity 0.3s ease;
@@ -186,45 +136,11 @@ form {
   opacity: 1; /* Muestra el texto al hacer hover */
 }
 
-/* Estilo general del formulario */
-#emailForm {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  border-radius: 15px;
-}
-#emailForm label {
-  font-family: "Lexend Tera", sans-serif;
-}
-
-/* Estilo del campo de entrada (input) */
-#emailForm input[type="email"] {
-  width: 100%;
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  color: #333;
-  margin-bottom: 20px;
-  box-sizing: border-box;
-  transition: border-color 0.3s ease;
-}
-
-/* Estilo para cuando el input recibe focus */
-#emailForm input[type="email"]:focus {
-  border-color: #007bff;
-  outline: none;
-}
-
-#emailForm button {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: "Lexend Tera", sans-serif;
+#img-pre {
+  width: 50%;  /* Ajusta el ancho */
+  height: auto;  /* Mantiene las proporciones */
+  display: block;   /* Hace que la imagen se comporte como un bloque */
+  margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
 }
 
 /*RESPONSIVE*/
@@ -262,6 +178,14 @@ form {
   #ti {
     font-size: 3em;
   }
+
+  #img-pre {
+    width: 70%;  /* Ajusta el ancho */
+    height: auto;  /* Mantiene las proporciones */
+    display: block;   /* Hace que la imagen se comporte como un bloque */
+    margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
+  }
+  
 
   #subti {
     font-size: 1.5em;
@@ -313,4 +237,12 @@ form {
   .hover-text {
     font-size: 20px;
   }
+
+  #img-pre {
+    width: 70%;  /* Ajusta el ancho */
+    height: auto;  /* Mantiene las proporciones */
+    display: block;   /* Hace que la imagen se comporte como un bloque */
+    margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
+  }
+  
 }

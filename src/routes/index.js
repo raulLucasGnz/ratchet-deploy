@@ -17,4 +17,12 @@ router.get("/test", (req, res) => {
   res.status(200).send("Ruta de prueba funcionando.");
 });
 
+router.get("/success", (req, res) => {
+  res.render("success");
+});
+
+router.get("/cancel", (req, res) => {
+  res.render("cancel");
+});
+
 module.exports = router;
