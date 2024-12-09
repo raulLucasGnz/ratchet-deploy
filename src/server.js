@@ -32,7 +32,7 @@ app.post("/create-checkout-session", async (req, res) => {
               name: "Prelisten KR Album",
               description: "Acceso anticipado al disco de Ratchet.",
             },
-            unit_amount: 100, // Precio en céntimos (1 euro)
+            unit_amount: 100, // 1 euro
           },
           quantity: 1,
         },
@@ -69,7 +69,7 @@ app.post(
 
         // Obtener correo proporcionado por el cliente en Stripe
         const email = session.customer_details.email;
-        console.log("Correo del cliente:", email);  // Verifica si el correo es correcto
+        console.log("Correo del cliente:", email);
 
         if (!email) {
           console.error("No se pudo obtener el correo electrónico del cliente.");
