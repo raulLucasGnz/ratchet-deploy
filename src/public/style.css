@@ -143,7 +143,19 @@ p{
   margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
 }
 
-/*RESPONSIVE*/
+/* Contenedor principal */
+.video-container {
+  display: flex;
+  flex-direction: column; /* Apila los videos verticalmente */
+  gap: 20px; /* Espacio entre videos */
+  align-items: center; /* Centra los videos horizontalmente */
+}
+
+.video-youtube iframe {
+  width: 560px;
+  height: 315px;
+}
+
 /* Para pantallas de menos de 1024px (tabletas) */
 @media screen and (max-width: 1024px) {
   #ti {
@@ -171,7 +183,21 @@ p{
   .merch-container {
     width: 35vw;
   }
-}
+
+  .video-youtube {
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    position: relative;
+    }
+
+    .video-youtube-2{
+      padding-bottom: 60px;
+      padding-top: 40px;
+    }
+  }
+
 
 /* Para pantallas de menos de 768px (móviles) */
 @media screen and (max-width: 768px) {
@@ -218,6 +244,11 @@ p{
   .merch-container img {
     border-radius: 5px;
   }
+
+  .video-youtube iframe {
+    width: 100%; /* Ancho ajustado al contenedor */
+  }
+
 }
 
 /* Para pantallas de menos de 480px (teléfonos pequeños) */
@@ -243,6 +274,10 @@ p{
     height: auto;  /* Mantiene las proporciones */
     display: block;   /* Hace que la imagen se comporte como un bloque */
     margin: 0 auto;   /* Centra la imagen dentro de su contenedor */
+  }
+
+  .video-container {
+    gap: 10px;
   }
 
 }
