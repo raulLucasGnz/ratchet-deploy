@@ -184,18 +184,10 @@ p{
     width: 35vw;
   }
 
-  .video-youtube {
-    height: 0;
-    overflow: hidden;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    position: relative;
-    }
+  .video-youtube iframe {
+    width: 100%; /* Ancho ajustado al contenedor */
+  }
 
-    .video-youtube-2{
-      padding-bottom: 60px;
-      padding-top: 40px;
-    }
   }
 
 
